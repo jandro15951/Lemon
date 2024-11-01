@@ -1,10 +1,4 @@
 
-document.getElementById('playButton').addEventListener('click', function() {
-    var audio = document.getElementById('audio');
-    audio.play().catch(function(error) {
-        console.log('Error playing audio:', error);
-    });
-});
 
 
 $(document).ready(function () {
@@ -56,9 +50,11 @@ function hide(){
 function SendSomeOneIsHere(){
 
     var emailModel = {
-        Message: "Alguien entro al sitio",
+        Body: "Alguien entro al sitio",
         Subject: "Enter",
-        To: "jandro15951@gmail.com"
+        To: "jandro15951@gmail.com",
+        FromName:"Lemon",
+        EntityId: 1
     };
 
     SendEmail(emailModel);
@@ -67,17 +63,19 @@ function SendSomeOneIsHere(){
 
 function SendEmail(emailModel){
     $.ajax({
-        url: 'https://localhost:7001/api/Send', 
+        url: 'http://localhost:7239/api/SendEmail', 
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify(emailModel),
+        headers: {
+            'x-api-key': 'AIzaSyCDTblfw8tcW97CfDSMT9_PUK_cyyST0Qc'
+        },
+        data: emailModel,
         success: function (response) {
             console.log("Respuesta del servidor:", response);
-          
         },
         error: function (xhr, status, error) {
             console.error("Error:", error);
-  
         }
     });
+    
 }
